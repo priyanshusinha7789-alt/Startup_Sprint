@@ -1,0 +1,8 @@
+{
+  "products": [
+    { "id": 1, "name": "Soap", "price": 40, "stock": 50 },
+    { "id": 2, "name": "Shampoo", "price": 120, "stock": 30 },
+    { "id": 3, "name": "Rice", "price": 60, "stock": 100 }
+  ],
+  "orders": []
+}

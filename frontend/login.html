@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Login</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body class="bg-gray-100 font-sans flex justify-center items-center h-screen">
+<div class="bg-white p-6 rounded shadow-md w-96">
+<h2 class="text-2xl font-bold mb-4 text-center">Shopkeeper Login</h2>
+
+<input id="email" type="email" placeholder="Email" class="w-full border p-2 rounded mb-2">
+<input id="pass" type="password" placeholder="Password" class="w-full border p-2 rounded mb-4">
+
+<button onclick="login()" class="bg-blue-600 text-white px-4 py-2 w-full rounded hover:bg-blue-700">Login</button>
+</div>
+
+<script>
+function login(){
+  const e=document.getElementById("email").value.trim();
+  const p=document.getElementById("pass").value.trim();
+
+  if(e==="admin@gmail.com" && p==="1234"){
+    Swal.fire("Success","Login Successful","success").then(()=>{window.location.href="index.html";});
+  }else{
+    Swal.fire("Error","Wrong Login Details","error");
+  }
+}
+</script>
+</body>
+</html>

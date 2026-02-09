@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Stock Management</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body class="bg-gray-100 font-sans p-6">
+<h2 class="text-2xl font-bold mb-4">Add / Update Stock</h2>
+
+<input id="item" placeholder="Item Name" class="w-full border p-2 rounded mb-2">
+<input id="qty" type="number" placeholder="Quantity" class="w-full border p-2 rounded mb-2">
+<input id="price" type="number" placeholder="Price" class="w-full border p-2 rounded mb-4">
+
+<button onclick="addStock()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Save</button>
+
+<script>
+async function addStock(){
+  const item = document.getElementById("item").value.trim();
+  const qty = Number(document.getElementById("qty").value);
+  const price = Number(document.getElementById("price").value);
+
+  if(!item || qty <=0 || price <=0){
+    Swal.fire("Error","Please enter valid values","error");
+    return;
+  }
+
+  const res = await fetch("http://localhost:3000/add-stock",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({item, qty, price})
+  });
+
+  const data = await res.json();
+  if(data.success){
+    Swal.fire("Success","Stock Updated","success");
+  }else{
+    Swal.fire("Error", data.message || "Failed","error");
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>POS Dashboard</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-100 font-sans p-6">
+
+<h1 class="text-3xl font-bold mb-6">Dashboard</h1>
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+  <div class="bg-white p-6 rounded shadow text-center">
+    <span class="text-4xl">💰</span>
+    <h2 class="text-xl font-semibold">Total Revenue</h2>
+    <p id="totalRevenue" class="text-2xl font-bold">₹0</p>
+  </div>
+  <div class="bg-white p-6 rounded shadow text-center">
+    <span class="text-4xl">🧑‍🤝‍🧑</span>
+    <h2 class="text-xl font-semibold">Total Customers</h2>
+    <p id="totalCustomers" class="text-2xl font-bold">0</p>
+  </div>
+  <div class="bg-white p-6 rounded shadow text-center">
+    <span class="text-4xl">🔥</span>
+    <h2 class="text-xl font-semibold">Top Item</h2>
+    <p id="topItem" class="text-2xl font-bold">-</p>
+  </div>
+</div>
+
+<div class="bg-white p-6 rounded shadow">
+  <canvas id="salesChart"></canvas>
+</div>
+
+<script>
+async function loadDashboard(){
+  const res = await fetch("http://localhost:3000/sales");
+  const data = await res.json();
+  
+  let revenue=0, itemCount={};
+  data.forEach(bill=>{
+    revenue+=bill.total;
+    itemCount[bill.item]=(itemCount[bill.item]||0)+bill.qty;
+  });
+
+  document.getElementById("totalRevenue").innerText="₹"+revenue;
+  document.getElementById("totalCustomers").innerText=data.length;
+
+  let topItem="-", max=0;
+  for(const i in itemCount){
+    if(itemCount[i]>max){ max=itemCount[i]; topItem=i; }
+  }
+  document.getElementById("topItem").innerText=topItem;
+
+  const ctx = document.getElementById("salesChart").getContext("2d");
+  new Chart(ctx,{
+    type:"bar",
+    data:{
+      labels:Object.keys(itemCount),
+      datasets:[{
+        label:"Quantity Sold",
+        data:Object.values(itemCount),
+        backgroundColor:"rgba(59,130,246,0.7)",
+        borderColor:"rgba(59,130,246,1)",
+        borderWidth:1
+      }]
+    },
+    options:{responsive:true, plugins:{legend:{display:false}}, scales:{y:{beginAtZero:true}}}
+  });
+}
+
+loadDashboard();
+</script>
+</body>
+</html>

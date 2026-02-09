@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Billing Page</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+body{
+font-family:Arial;
+background:#f2f2f2;
+}
+
+.container{
+background:white;
+width:400px;
+margin:50px auto;
+padding:20px;
+border-radius:10px;
+box-shadow:0 0 10px gray;
+}
+
+input,button{
+width:100%;
+padding:10px;
+margin:6px 0;
+}
+
+button{
+background:#2563eb;
+color:white;
+border:none;
+cursor:pointer;
+border-radius:5px;
+}
+
+button:hover{
+background:#1e40af;
+}
+
+h2{text-align:center;}
+#bill-area p{margin:5px 0;}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Smart Billing System</h2>
+
+<input id="customer" placeholder="Customer Name">
+
+<input id="item" placeholder="Item Name">
+
+<input id="price" type="number" placeholder="Price">
+
+<input id="qty" type="number" placeholder="Quantity">
+
+<button onclick="addItem()">Add Item</button>
+
+<div id="bill-area"></div>
+
+<h3 id="total">Total = ₹0</h3>
+
+<button onclick="downloadPDF()">Download PDF</button>
+
+</div>
+
+<!-- IMPORTANT -->
+<script src="js/billing.js"></script>
+
+</body>
+</html>
